@@ -9,13 +9,17 @@ pipeline {
 
         stage('Install dependencies') {
             steps {
-                sh 'npm install'
+                dir('my-app') {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Build app') {
             steps {
-                sh 'npm run build'
+                dir('my-app') {
+                    sh 'npm run build'
+                }
             }
         }
 
