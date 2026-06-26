@@ -1,39 +1,40 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'nodejs'
+    }
+
     stages {
+
         stage('Install dependencies') {
             steps {
-                dir('my-app') {
-                    sh 'npm install'
-                }
+                sh 'npm install'
             }
         }
 
         stage('Build app') {
             steps {
-                dir('my-app') {
-                    sh 'npm run build'
-                }
+                sh 'npm run build'
             }
         }
 
         stage('Build docker image') {
             steps {
-                sh 'docker build -t alkerix/react-nodes-example:$BUILD_NUMBER .'
+                sh 'docker build -t <docker-user>/react-nodes-example:$BUILD_NUMBER .'
             }
         }
 
         stage('Push image') {
             steps {
                 withCredentials([usernamePassword(
-                    credentialsId: 'docker-hub-repo',
+                    credentialsId: 'dockerhub',
                     usernameVariable: 'USER',
                     passwordVariable: 'PASS'
                 )]) {
                     sh '''
                     echo $PASS | docker login -u $USER --password-stdin
-                    docker push alkerix/react-nodes-example:$BUILD_NUMBER
+                    docker push <docker-user>/react-nodes-example:$BUILD_NUMBER
                     '''
                 }
             }
