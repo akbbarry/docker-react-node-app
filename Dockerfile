@@ -12,4 +12,4 @@ COPY api/server.js ./api/
 
 EXPOSE 3080
 
-CMD ["node", "./api/server.js"]
+CMD ["node", "server.js"]
