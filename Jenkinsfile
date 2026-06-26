@@ -21,7 +21,7 @@ pipeline {
 
         stage('Build docker image') {
             steps {
-                sh 'docker build -t <docker-user>/react-nodes-example:$BUILD_NUMBER .'
+                sh 'docker build -t Alkerix/react-nodes-example:$BUILD_NUMBER .'
             }
         }
 
@@ -34,7 +34,7 @@ pipeline {
                 )]) {
                     sh '''
                     echo $PASS | docker login -u $USER --password-stdin
-                    docker push <docker-user>/react-nodes-example:$BUILD_NUMBER
+                    docker push Alkerix/react-nodes-example:$BUILD_NUMBER
                     '''
                 }
             }
