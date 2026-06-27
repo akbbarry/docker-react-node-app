@@ -1,3 +1,9 @@
+FROM node:18 AS ui-build
+WORKDIR /usr/src/app
+
+COPY my-app/ ./my-app/
+RUN cd my-app && npm install && npm run build
+
 FROM node:18 AS server-build
 
 WORKDIR /root/api
